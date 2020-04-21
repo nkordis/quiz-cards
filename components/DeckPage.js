@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
 function StartQuizBtn({ onPress }) {
@@ -17,16 +17,26 @@ function CreateQuizBtn({ onPress }) {
   );
 }
 
-export default function DeckPage() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{decks[1].title}</Text>
-      <Text>{decks[1].quizzes} quizzes</Text>
+export default class DeckPage extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { deckId } = navigation.state.params;
+    return {
+      title: decks[deckId].title,
+    };
+  };
 
-      <StartQuizBtn onPress={this.submit} />
-      <CreateQuizBtn onPress={this.submit} />
-    </View>
-  );
+  render() {
+    const deckId = this.props.navigation.state.params.deckId;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>{"Deck " + deckId}</Text>
+        <Text>{decks[deckId].quizzes} quizzes</Text>
+
+        <StartQuizBtn onPress={this.submit} />
+        <CreateQuizBtn onPress={this.submit} />
+      </View>
+    );
+  }
 }
 
 const decks = {

@@ -1,17 +1,40 @@
-import React, { Component } from "react";
-import { ScrollView, Text, StyleSheet } from "react-native";
+import React from "react";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { createStackNavigator } from "react-navigation";
 import Deck from "./Deck";
+import DeckPage from "./DeckPage";
 
-class ListDecks extends Component {
-  render() {
-    return (
-      <ScrollView style={styles.container}>
-        {Object.keys(decks).map((deckId) => (
+function ListAllDecks({ navigation }) {
+  return (
+    <ScrollView style={styles.container}>
+      {Object.keys(decks).map((deckId) => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("DeckPage", { deckId: deckId })}
+        >
           <Deck style={styles.box} deckId={deckId} />
-        ))}
-      </ScrollView>
-    );
-  }
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  );
+}
+
+const Stack = createStackNavigator({
+  ListAllDecks: {
+    screen: ListAllDecks,
+  },
+  DeckPage: {
+    screen: DeckPage,
+    navigationOptions: {
+      headerTintColor: "#F0FFFF",
+      headerStyle: {
+        backgroundColor: "#EE82EE",
+      },
+    },
+  },
+});
+
+function ListDecks() {
+  return <Stack />;
 }
 
 const decks = {
