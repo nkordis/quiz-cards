@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { createStackNavigator } from "react-navigation";
 
 function StartQuizBtn({ onPress }) {
   return (
     <TouchableOpacity style={styles.btnStart} onPress={onPress}>
-      <Text style={styles.btnText}>Start a Quiz</Text>
+      <Text style={styles.btnText}>Start quiz</Text>
     </TouchableOpacity>
   );
 }
@@ -12,7 +13,7 @@ function StartQuizBtn({ onPress }) {
 function CreateQuizBtn({ onPress }) {
   return (
     <TouchableOpacity style={styles.btnCreate} onPress={onPress}>
-      <Text style={styles.btnText}>Create new Quiz</Text>
+      <Text style={styles.btnText}>Add card</Text>
     </TouchableOpacity>
   );
 }
@@ -30,10 +31,12 @@ export default class DeckPage extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{"Deck " + deckId}</Text>
-        <Text>{decks[deckId].quizzes} quizzes</Text>
+        <Text>{decks[deckId].quizzes} cards</Text>
+        <StartQuizBtn onPress={() => this.props.navigation.navigate("Quiz")} />
 
-        <StartQuizBtn onPress={this.submit} />
-        <CreateQuizBtn onPress={this.submit} />
+        <CreateQuizBtn
+          onPress={() => this.props.navigation.navigate("NewQuiz")}
+        />
       </View>
     );
   }

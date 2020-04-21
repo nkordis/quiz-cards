@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "react-navigation";
 import Deck from "./Deck";
 import DeckPage from "./DeckPage";
+import NewQuiz from "./NewQuiz";
+import Quiz from "./Quiz";
 
 function ListAllDecks({ navigation }) {
   return (
@@ -29,6 +31,26 @@ const Stack = createStackNavigator({
       headerStyle: {
         backgroundColor: "#EE82EE",
       },
+    },
+  },
+  NewQuiz: {
+    screen: NewQuiz,
+    navigationOptions: {
+      headerTintColor: "#F0FFFF",
+      headerStyle: {
+        backgroundColor: "#EE82EE",
+      },
+      title: "New question",
+    },
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: "#F0FFFF",
+      headerStyle: {
+        backgroundColor: "#EE82EE",
+      },
+      title: "Quiz",
     },
   },
 });

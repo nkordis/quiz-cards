@@ -44,7 +44,10 @@ export default class NewQuiz extends Component {
           maxLength={100}
           onChangeText={this.handleTextChangeAnswer}
         />
-        <TouchableOpacity style={styles.btn} onPress={this.handleSubmit}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => this.props.navigation.navigate("DeckPage")}
+        >
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
       </View>
