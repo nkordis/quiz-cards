@@ -18,51 +18,100 @@ function IncorrectBtn({ onPress }) {
 }
 
 export default class Quiz extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentQuestionNo: 0,
+      correctAnswers: 0,
+      showButtons: true,
+      showAnswer: false,
+    };
+  }
+
   submitCorrect = () => {
-    alert("Correct");
+    if (
+      this.props.navigation.state.params.deck.questions.length - 1 >
+      this.state.currentQuestionNo
+    ) {
+      this.setState((state) => {
+        return {
+          currentQuestionNo: state.currentQuestionNo + 1,
+          correctAnswers: state.correctAnswers + 1,
+        };
+      });
+    } else {
+      this.setState((state) => {
+        return {
+          correctAnswers: state.correctAnswers + 1,
+          showButtons: false,
+        };
+      });
+    }
   };
 
   submitIncorrect = () => {
-    alert("Incorrect");
+    if (
+      this.props.navigation.state.params.deck.questions.length - 1 >
+      this.state.currentQuestionNo
+    ) {
+      this.setState((state) => {
+        return { currentQuestionNo: state.currentQuestionNo + 1 };
+      });
+    } else {
+      this.setState({
+        showButtons: false,
+      });
+    }
   };
 
   handleClickAnswer = () => {
-    alert("Show answer");
+    this.setState({
+      ...this.state,
+      showAnswer: this.state.showAnswer ? false : true,
+    });
   };
 
   render() {
     return (
       <View>
-        <Text>1/2</Text>
-        <View style={styles.container}>
-          <Text style={styles.title}>{decks[1].questions[0].question}</Text>
-          <Text style={{ color: "#bc3562" }} onPress={this.handleClickAnswer}>
-            Answer
+        <Text>
+          Question {this.state.currentQuestionNo + 1}/
+          {this.props.navigation.state.params.deck.questions.length}
+        </Text>
+
+        {this.state.showButtons && (
+          <View style={styles.container}>
+            <Text style={styles.title}>
+              {!this.state.showAnswer
+                ? this.props.navigation.state.params.deck.questions[
+                    this.state.currentQuestionNo
+                  ].question
+                : this.props.navigation.state.params.deck.questions[
+                    this.state.currentQuestionNo
+                  ].answer}
+            </Text>
+            <Text style={{ color: "#bc3562" }} onPress={this.handleClickAnswer}>
+              {this.state.showAnswer ? "Question" : "Answer"}
+            </Text>
+            <CorrectBtn onPress={this.submitCorrect} />
+            <IncorrectBtn onPress={this.submitIncorrect} />
+          </View>
+        )}
+
+        {(this.state.currentQuestionNo !== 0 || !this.state.showButtons) && (
+          <Text>
+            {this.state.correctAnswers} out of{" "}
+            {this.state.showButtons
+              ? this.state.currentQuestionNo
+              : this.state.currentQuestionNo + 1}{" "}
+            correct
           </Text>
-          <CorrectBtn onPress={this.submitCorrect} />
-          <IncorrectBtn onPress={this.submitIncorrect} />
-          <Text>1 out of 3 correct</Text>
-        </View>
+        )}
       </View>
     );
   }
 }
-
-const decks = {
-  1: {
-    title: "Deck 1",
-    quizzes: "3",
-    questions: [
-      {
-        question: "What is a closure?",
-        answer:
-          "The combination of a function and the lexical environment within which that function was declared.",
-      },
-    ],
-  },
-  2: { title: "Deck 2", quizzes: "5" },
-  3: { title: "Deck 3", quizzes: "4" },
-};
 
 var styles = StyleSheet.create({
   container: {
