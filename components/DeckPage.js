@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { createStackNavigator } from "react-navigation";
 
 function StartQuizBtn({ onPress }) {
   return (
@@ -20,33 +19,30 @@ function CreateQuizBtn({ onPress }) {
 
 export default class DeckPage extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { deckId } = navigation.state.params;
+    const { deck } = navigation.state.params;
     return {
-      title: decks[deckId].title,
+      title: navigation.state.params.deck.title,
     };
   };
 
   render() {
-    const deckId = this.props.navigation.state.params.deckId;
+    const deck = this.props.navigation.state.params.deck;
+
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{"Deck " + deckId}</Text>
-        <Text>{decks[deckId].quizzes} cards</Text>
-        <StartQuizBtn onPress={() => this.props.navigation.navigate("Quiz")} />
+        <Text style={styles.title}>{deck.title}</Text>
+        <Text>{deck.questions.length} cards</Text>
+        <StartQuizBtn
+          onPress={() => this.props.navigation.navigate("Quiz", { deck })}
+        />
 
         <CreateQuizBtn
-          onPress={() => this.props.navigation.navigate("NewQuiz")}
+          onPress={() => this.props.navigation.navigate("NewQuiz", { deck })}
         />
       </View>
     );
   }
 }
-
-const decks = {
-  1: { title: "Deck 1", quizzes: "3" },
-  2: { title: "Deck 2", quizzes: "5" },
-  3: { title: "Deck 3", quizzes: "4" },
-};
 
 var styles = StyleSheet.create({
   container: {

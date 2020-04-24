@@ -73,6 +73,16 @@ export default class Quiz extends Component {
   };
 
   render() {
+    if (this.props.navigation.state.params.deck.questions.length === 0) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            Sorry you cannot take the quiz because there are no cards in the
+            deck
+          </Text>
+        </View>
+      );
+    }
     return (
       <View>
         <Text>
@@ -99,14 +109,38 @@ export default class Quiz extends Component {
           </View>
         )}
 
-        {(this.state.currentQuestionNo !== 0 || !this.state.showButtons) && (
-          <Text>
-            {this.state.correctAnswers} out of{" "}
-            {this.state.showButtons
-              ? this.state.currentQuestionNo
-              : this.state.currentQuestionNo + 1}{" "}
-            correct
-          </Text>
+        {!this.state.showButtons && (
+          <View style={styles.container}>
+            <Text style={styles.title}>
+              {this.state.correctAnswers} out of
+              {this.state.showButtons
+                ? this.state.currentQuestionNo
+                : this.state.currentQuestionNo + 1}
+              correct
+            </Text>
+            <TouchableOpacity
+              style={styles.btnCorrect}
+              onPress={() => {
+                this.setState({
+                  currentQuestionNo: 0,
+                  correctAnswers: 0,
+                  showButtons: true,
+                  showAnswer: false,
+                });
+              }}
+            >
+              <Text style={styles.btnText}>Restart</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.btnCorrect}
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}
+            >
+              <Text style={styles.btnText}>Back to deck</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     );

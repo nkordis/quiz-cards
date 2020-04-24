@@ -21,8 +21,27 @@ export default class NewQuiz extends Component {
     this.setState((state) => ({ ...state, inputAnswer }));
   };
 
-  handleSubmit = () => {
-    alert(this.state.inputQuestion + "  \n" + this.state.inputAnswer);
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    let question = this.state.inputQuestion;
+    let answer = this.state.inputAnswer;
+    this.props.screenProps.handleQuizChange(
+      question,
+      answer,
+      this.props.navigation.state.params.deck.title
+    );
+    this.setState({ inputQuestion: "" });
+    this.setState({ inputAnswer: "" });
+
+    this.props.navigation.navigate("DeckPage", {
+      deck: {
+        ...this.props.navigation.state.params.deck,
+        questions: this.props.navigation.state.params.deck.questions.concat([
+          { question, answer },
+        ]),
+      },
+    });
   };
 
   render() {
@@ -30,7 +49,7 @@ export default class NewQuiz extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Please write write the question</Text>
+        <Text style={styles.title}>Please write the question</Text>
         <TextInput
           value={inputQuestion}
           placeholder="Enter the question"
@@ -44,10 +63,7 @@ export default class NewQuiz extends Component {
           maxLength={100}
           onChangeText={this.handleTextChangeAnswer}
         />
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => this.props.navigation.navigate("DeckPage")}
-        >
+        <TouchableOpacity style={styles.btn} onPress={this.handleSubmit}>
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
       </View>

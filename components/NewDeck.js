@@ -1,30 +1,77 @@
 import React, { Component } from "react";
-import { ScrollView, Text, StyleSheet } from "react-native";
-import Deck from "./Deck";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 
-class ListDecks extends Component {
+export default class DeckCreate extends Component {
+  state = {
+    input: "",
+  };
+
+  handleTextChange = (input) => {
+    this.setState({ input });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    let deckName = this.state.input;
+    this.props.screenProps.handleChange(deckName);
+    this.setState({ input: "" });
+
+    this.props.navigation.navigate("DeckPage", {
+      deck: {
+        title: deckName,
+        questions: [],
+      },
+    });
+  };
+
   render() {
+    const { input } = this.state;
     return (
-      <ScrollView style={styles.container}>
-        {Object.keys(decks).map((deckId) => (
-          <Deck style={styles.box} deckId={deckId} />
-        ))}
-      </ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.title}>What is the title of the new deck?</Text>
+        <TextInput
+          value={input}
+          placeholder="Write deck's name"
+          maxLength={50}
+          onChangeText={this.handleTextChange}
+        />
+        <TouchableOpacity style={styles.btn} onPress={this.handleSubmit}>
+          <Text style={styles.btnText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 }
-
-const decks = {
-  1: { title: "Deck 1", quizzes: "3" },
-  2: { title: "Deck 2", quizzes: "5" },
-  3: { title: "Deck 3", quizzes: "4" },
-};
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
   },
-});
+  title: {
+    fontSize: 19,
+    fontWeight: "bold",
+    marginBottom: 100,
+    marginTop: 100,
+  },
 
-export default ListDecks;
+  btn: {
+    backgroundColor: "#b4c33f",
+    padding: 10,
+    paddingLeft: 50,
+    paddingRight: 50,
+    marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    BorderRadius: 5,
+  },
+  btnText: {
+    color: "#fff",
+  },
+});

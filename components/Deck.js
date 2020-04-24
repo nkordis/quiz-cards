@@ -4,17 +4,11 @@ import { Text, View, StyleSheet } from "react-native";
 export default function Deck(props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{decks[props.deckId].title}</Text>
-      <Text>{decks[props.deckId].quizzes + " cards"}</Text>
+      <Text style={styles.title}> {props.deckId}</Text>
+      <Text>{props.cardsNo} cards</Text>
     </View>
   );
 }
-
-const decks = {
-  1: { title: "Deck 1", quizzes: "3" },
-  2: { title: "Deck 2", quizzes: "5" },
-  3: { title: "Deck 3", quizzes: "4" },
-};
 
 var styles = StyleSheet.create({
   container: {
