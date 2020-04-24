@@ -10,6 +10,7 @@ import DeckPage from "./components/DeckPage";
 import NewQuiz from "./components/NewQuiz";
 import Quiz from "./components/Quiz";
 import { loadDBData } from "./utils/api";
+import { setLocalNotification } from "./utils/notifications";
 
 const Tabs = createBottomTabNavigator(
   {
@@ -85,6 +86,9 @@ const Stack = createStackNavigator({
 });
 
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
   state = loadDBData(); /*{
     React: {
       title: "React",

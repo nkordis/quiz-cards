@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  clearLocalNotification,
+  setLocalNotification,
+} from "../utils/notifications";
 
 function CorrectBtn({ onPress }) {
   return (
@@ -142,6 +146,7 @@ export default class Quiz extends Component {
             </TouchableOpacity>
           </View>
         )}
+        {clearLocalNotification().then(setLocalNotification)}
       </View>
     );
   }
