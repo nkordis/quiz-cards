@@ -77,6 +77,10 @@ export default class Quiz extends Component {
   };
 
   render() {
+    if (!this.state.showButtons) {
+      clearLocalNotification().then(setLocalNotification);
+    }
+
     if (this.props.navigation.state.params.deck.questions.length === 0) {
       return (
         <View style={styles.container}>
@@ -146,7 +150,6 @@ export default class Quiz extends Component {
             </TouchableOpacity>
           </View>
         )}
-        {clearLocalNotification().then(setLocalNotification)}
       </View>
     );
   }
