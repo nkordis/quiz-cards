@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { saveDeckToDB } from "../utils/api";
 
 export default class NewQuiz extends Component {
   state = {
@@ -23,7 +24,6 @@ export default class NewQuiz extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
     let question = this.state.inputQuestion;
     let answer = this.state.inputAnswer;
     this.props.screenProps.handleQuizChange(
@@ -31,17 +31,21 @@ export default class NewQuiz extends Component {
       answer,
       this.props.navigation.state.params.deck.title
     );
-    this.setState({ inputQuestion: "" });
-    this.setState({ inputAnswer: "" });
+
+    const deck = {
+      ...this.props.navigation.state.params.deck,
+      questions: this.props.navigation.state.params.deck.questions.concat([
+        { question, answer },
+      ]),
+    };
 
     this.props.navigation.navigate("DeckPage", {
-      deck: {
-        ...this.props.navigation.state.params.deck,
-        questions: this.props.navigation.state.params.deck.questions.concat([
-          { question, answer },
-        ]),
-      },
+      deck,
     });
+
+    saveDeckToDB(deck);
+    this.setState({ inputQuestion: "" });
+    this.setState({ inputAnswer: "" });
   };
 
   render() {

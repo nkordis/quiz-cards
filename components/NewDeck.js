@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { saveDeckToDB } from "../utils/api";
 
 export default class DeckCreate extends Component {
   state = {
@@ -20,14 +21,18 @@ export default class DeckCreate extends Component {
     e.preventDefault();
     let deckName = this.state.input;
     this.props.screenProps.handleChange(deckName);
-    this.setState({ input: "" });
+
+    deck = {
+      title: deckName,
+      questions: [],
+    };
 
     this.props.navigation.navigate("DeckPage", {
-      deck: {
-        title: deckName,
-        questions: [],
-      },
+      deck,
     });
+
+    saveDeckToDB(deck);
+    this.setState({ input: "" });
   };
 
   render() {

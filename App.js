@@ -9,6 +9,7 @@ import NewDeck from "./components/NewDeck";
 import DeckPage from "./components/DeckPage";
 import NewQuiz from "./components/NewQuiz";
 import Quiz from "./components/Quiz";
+import { loadDBData } from "./utils/api";
 
 const Tabs = createBottomTabNavigator(
   {
@@ -84,7 +85,7 @@ const Stack = createStackNavigator({
 });
 
 export default class App extends Component {
-  state = {
+  state = loadDBData(); /*{
     React: {
       title: "React",
       questions: [
@@ -108,7 +109,7 @@ export default class App extends Component {
         },
       ],
     },
-  };
+  };*/
 
   handler = (newDeckName) => {
     this.setState({
