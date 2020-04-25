@@ -24,6 +24,7 @@ export default class NewQuiz extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     let question = this.state.inputQuestion;
     let answer = this.state.inputAnswer;
     this.props.screenProps.handleQuizChange(
@@ -95,7 +96,7 @@ var styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
-    BorderRadius: 5,
+    borderRadius: 5,
   },
   btnText: {
     color: "#fff",

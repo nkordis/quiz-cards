@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import {
+  getDailyReminderValue,
   clearLocalNotification,
   setLocalNotification,
 } from "../utils/notifications";
@@ -174,7 +175,7 @@ var styles = StyleSheet.create({
     marginTop: 150,
     justifyContent: "center",
     alignItems: "center",
-    BorderRadius: 5,
+    borderRadius: 5,
   },
   btnIncorrect: {
     backgroundColor: "#E53224",
@@ -184,7 +185,7 @@ var styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
-    BorderRadius: 5,
+    borderRadius: 5,
   },
   btnText: {
     color: "#fff",

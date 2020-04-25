@@ -61,7 +61,7 @@ var styles = StyleSheet.create({
     marginTop: 200,
     justifyContent: "center",
     alignItems: "center",
-    BorderRadius: 5,
+    borderRadius: 5,
   },
   btnCreate: {
     backgroundColor: "#E53224",
@@ -71,7 +71,7 @@ var styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
-    BorderRadius: 5,
+    borderRadius: 5,
   },
   btnText: {
     color: "#fff",

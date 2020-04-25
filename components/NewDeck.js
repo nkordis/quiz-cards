@@ -19,10 +19,9 @@ export default class DeckCreate extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let deckName = this.state.input;
+    const deckName = this.state.input;
     this.props.screenProps.handleChange(deckName);
-
-    deck = {
+    const deck = {
       title: deckName,
       questions: [],
     };
@@ -74,7 +73,7 @@ var styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
-    BorderRadius: 5,
+    borderRadius: 5,
   },
   btnText: {
     color: "#fff",
